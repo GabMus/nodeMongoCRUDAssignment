@@ -1,0 +1,33 @@
+{
+  "name": "mongocrud",
+  "version": "1.0.0",
+  "description": "Mongo CRUD CLI demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabMus/nodeMongoCRUDAssignment.git"
+  },
+  "keywords": [
+    "mongo",
+    "mongodb",
+    "node",
+    "cli",
+    "terminal",
+    "command",
+    "line",
+    "crud"
+  ],
+  "author": "Gabriele Musco",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/GabMus/nodeMongoCRUDAssignment/issues"
+  },
+  "homepage": "https://github.com/GabMus/nodeMongoCRUDAssignment#readme",
+  "dependencies": {
+    "mongodb": "^2.2.30",
+    "yargs": "^8.0.2"
+  }
+}
