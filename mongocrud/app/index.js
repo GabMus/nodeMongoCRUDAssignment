@@ -32,14 +32,14 @@ class MongoManager {
     _doOperation(operation, ...args) {
         MongoClient.connect(this.mongoaddress, (err, db) => {
             assert.equal(null, err);
-            console.log(
+            /*console.log(
                 "Connected successfully to server\n"
-            );
+            );*/
 
             operation(db, () => {
-                console.log("\nOperation completed");
+                // console.log("\nOperation completed");
                 db.close();
-                console.log("Database connection closed");
+                // console.log("Database connection closed");
             }, ...args);
         });
     }
