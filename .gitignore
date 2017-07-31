@@ -1,3 +1,4 @@
 /mongocrud/node_modules
 /.vagrant
+/mongocrud/dist
 
