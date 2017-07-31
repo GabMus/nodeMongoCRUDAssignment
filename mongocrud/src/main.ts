@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
+declare function require(name:string);
+
 // parse(['-c', '-C', '-g', '-r', '-R'???, '-f', '-d', '-D', '-u'])
 const argv = require('yargs').argv['_'];
 const calledCommand = require('yargs').argv['$0'];
-const MongoClient = require('mongodb').MongoClient,
-    assert = require('assert');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 
-const usage = () => {
-    console.log(
-        `
+const usage = () : void => {
+    console.log(`
 Usage: ${calledCommand} <mongodb_address|"local"> <command> [arguments]
 
 Use "local" instead of the mongodb address to access a localhost server on port 27017
@@ -19,17 +20,18 @@ Commands:
   {read, r} <collection_name>\n\tRead all the entries for a collection\n
   {find, f} <collection_name> "<find_params_JSON>"\n\tGet an entry from a collection matching the find parameters\n
   {update, u} <collection_name> "<find_params_JSON>" "<new_data_JSON>"\n\tUpdate an entry from a collection matching the find parameters with new data\n
-  {delete, d} <collection_name> "<find_params_JSON>"\n\tDelete an entry from a collection matching the find parameters\n
-        `
-    );
+  {delete, d} <collection_name> "<find_params_JSON>"\n\tDelete an entry from a collection matching the find parameters\n`);
 }
 
 class MongoManager {
-    constructor(mongoaddress) {
+
+    mongoaddress:string;
+
+    constructor(mongoaddress: string) {
         this.mongoaddress = mongoaddress;
     }
 
-    _doOperation(operation, ...args) {
+    _doOperation(operation : Function, ...args) {
         MongoClient.connect(this.mongoaddress, (err, db) => {
             assert.equal(null, err);
             /*console.log(
@@ -77,12 +79,12 @@ class MongoManager {
         )
     }
 
-    readEntries(collectionName) {
+    readEntries(collectionName : string) {
         return this.findEntry(collectionName, '{}');
     }
 
-    findEntry(collectionName, findArgs, print=true) {
-        findArgs = JSON.parse(findArgs);
+    findEntry(collectionName : string, findArgsJSON : string, print : boolean=true) {
+        let findArgs : string = JSON.parse(findArgsJSON);
         this._doOperation(
             (db, cb) => {
                 let col = db.collection(collectionName);
@@ -106,8 +108,8 @@ class MongoManager {
         );
     }
 
-    deleteEntry(collectionName, findArgs) {
-        findArgs = JSON.parse(findArgs);
+    deleteEntry(collectionName : string, findArgsJSON : string) {
+        let findArgs : string = JSON.parse(findArgsJSON);
         this._doOperation(
             (db, cb) => {
                 let col = db.collection(collectionName);
@@ -121,9 +123,9 @@ class MongoManager {
         );
     }
 
-    updateEntry(collectionName, findArgs, newData) {
-        findArgs = JSON.parse(findArgs);
-        newData = JSON.parse(newData);
+    updateEntry(collectionName : string, findArgsJSON : string, newDataJSON : string) {
+        let findArgs : string = JSON.parse(findArgsJSON);
+        let newData : string = JSON.parse(newDataJSON);
         this._doOperation(
             (db, cb) => {
                 let col = db.collection(collectionName);

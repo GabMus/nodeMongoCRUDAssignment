@@ -2,7 +2,7 @@
   "name": "mongocrud",
   "version": "1.0.0",
   "description": "Mongo CRUD CLI demo",
-  "main": "index.js",
+  "main": "dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,6 +28,7 @@
   "homepage": "https://github.com/GabMus/nodeMongoCRUDAssignment#readme",
   "dependencies": {
     "mongodb": "^2.2.30",
-    "yargs": "^8.0.2"
+    "yargs": "^8.0.2",
+    "typescript": "^2.4.2"
   }
 }
