@@ -7,12 +7,14 @@ const argv = require('yargs').argv['_'];
 const calledCommand = require('yargs').argv['$0'];
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+const config = require('../config.json');
 
 const usage = () : void => {
     console.log(`
-Usage: ${calledCommand} <mongodb_address|"local"> <command> [arguments]
+Usage: ${calledCommand} <mongodb_address|"local"|"config"> <command> [arguments]
 
 Use "local" instead of the mongodb address to access a localhost server on port 27017
+Use "config" to load address and credentials from the configuration file
 
 Commands:
   {create, c} <collection_name> "<entry_JSON>"\n\tCreate a new entry in a collection from a JSON string\n
@@ -148,6 +150,9 @@ if (argv.length < 2) {
 else {
     if (argv[0] == 'local') {
         argv[0] = 'mongodb://127.0.0.1:27017';
+    }
+    else if (argv[0] == 'config') {
+        argv[0] = `mongodb://${config.address}:${config.port}`;
     }
     let m = new MongoManager(argv[0]);
     switch (argv[1]) {
